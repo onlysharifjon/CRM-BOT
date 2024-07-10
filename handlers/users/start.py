@@ -4,11 +4,12 @@ from aiogram.dispatcher import FSMContext
 from loader import dp
 from data.config import parol
 from keyboards.default.admin_buttons import admin_btn
+from keyboards.inline.inline_buttons import *
 
 
 @dp.message_handler(commands='start')
 async def bot_start(message: types.Message):
-    await message.answer(f"Assalomu Aleykum, <b>{message.from_user.full_name}</b>!")
+    await message.answer(f"Assalomu Aleykum, <b>{message.from_user.full_name}</b>!", reply_markup=menyu_button)
 
 
 from utils.db_api.sql_database import *
@@ -95,6 +96,8 @@ async def tasdiqlash(call: types.CallbackQuery):
 
     @dp.message_handler(state=All_States.vazifa_text)
     async def tasdiqlama(message: types.Message):
+        add_Task(user_id=str(user_id_task), task_text=message.text, date_task=message.date)
+
         await bot.send_message(user_id_task,
                                text=f"{message.text}\n\n Sizga <b>{message.from_user.full_name}</b> tomonidan yuklatildi")
         await message.answer('Vazifa xodimga yuborildi')
@@ -135,3 +138,34 @@ async def delete_state(call: types.CallbackQuery):
     await asyncio.sleep(5)
     await call.message.delete()
     await All_States.admin.set()
+
+
+@dp.callback_query_handler(text="tasks")
+async def all_tasks(call: types.CallbackQuery):
+    await call.message.answer('Sizning vazifalaringiz')
+    list_tasks = User_task(user_id=str(call.message.chat.id))
+    tayyor_text = ''
+    # for i in list_tasks:
+    #     for k in range(len(list_tasks)):
+    #         for d in range(len(i)):
+    #             print(i[k],d)
+    #             if d == 0:
+    #                 tayyor_text += i[k][d]
+    #             elif d == 1:
+    #                 tayyor_text += i[k][d]
+    #             elif d == 2:
+    #                 tayyor_text += i[k][d]
+    #         tayyor_text += '\n'
+    # await call.message.answer('Sizning Vazifalaringiz !')
+    # await call.message.answer(tayyor_text)
+    print(list_tasks)
+    for i in range(len(list_tasks)):
+        for d in range(len(list_tasks[i])):
+            if d == 0:
+                tayyor_text += '📃' + list_tasks[i][d] + '\n'
+            elif d == 1:
+                tayyor_text += '🆔' + list_tasks[i][d] + '\n'
+            elif d == 2:
+                tayyor_text += '⏳' + list_tasks[i][d] + '\n\n'
+        tayyor_text += '------------------\n\n'
+    await call.message.answer(tayyor_text)

@@ -1,6 +1,6 @@
 import sqlite3
 
-connect = sqlite3.connect('crm_database.db')
+connect = sqlite3.connect('/home/sharifjon/PycharmProjects/CRM AIOGRAM/crm_database.db')
 cursor = connect.cursor()
 
 
@@ -40,3 +40,18 @@ def delete_user_id(user_id):
     cursor.execute('DELETE FROM users_table WHERE user_id=?', (user_id,))
     connect.commit()
     return name
+
+
+cursor.execute('CREATE TABLE IF NOT EXISTS tasks_table (task_text TEXT,user_id TEXT,date_task TEXT)')
+
+
+def add_Task(user_id, task_text, date_task):
+    cursor.execute('INSERT INTO tasks_table VALUES (?,?,?)', (task_text, user_id, date_task))
+    connect.commit()
+
+
+def User_task(user_id):
+    a = cursor.execute('SELECT * FROM tasks_table WHERE user_id=?', (user_id,))
+    task_list = a.fetchall()
+    print(a.fetchall())
+    return task_list
