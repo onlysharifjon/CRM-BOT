@@ -55,3 +55,7 @@ def User_task(user_id):
     task_list = a.fetchall()
     print(a.fetchall())
     return task_list
+
+
+# cursor.execute("ALTER TABLE tasks_table ADD COLUMN status TEXT DEFAULT 'bajarilmadi'")
+# cursor.execute('SELECT * FROM tasks_table WHERE status=?', ('bajarilmadi',))

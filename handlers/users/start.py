@@ -145,19 +145,6 @@ async def all_tasks(call: types.CallbackQuery):
     await call.message.answer('Sizning vazifalaringiz')
     list_tasks = User_task(user_id=str(call.message.chat.id))
     tayyor_text = ''
-    # for i in list_tasks:
-    #     for k in range(len(list_tasks)):
-    #         for d in range(len(i)):
-    #             print(i[k],d)
-    #             if d == 0:
-    #                 tayyor_text += i[k][d]
-    #             elif d == 1:
-    #                 tayyor_text += i[k][d]
-    #             elif d == 2:
-    #                 tayyor_text += i[k][d]
-    #         tayyor_text += '\n'
-    # await call.message.answer('Sizning Vazifalaringiz !')
-    # await call.message.answer(tayyor_text)
     print(list_tasks)
     for i in range(len(list_tasks)):
         for d in range(len(list_tasks[i])):
@@ -166,6 +153,12 @@ async def all_tasks(call: types.CallbackQuery):
             elif d == 1:
                 tayyor_text += '🆔' + list_tasks[i][d] + '\n'
             elif d == 2:
-                tayyor_text += '⏳' + list_tasks[i][d] + '\n\n'
+                tayyor_text += '⏳' + list_tasks[i][d] + '\n'
+            elif d == 3:
+                if list_tasks[i][d] == 'bajarilmadi':
+                    tayyor_text += '❌' + list_tasks[i][d] + '\n\n'
+                else:
+                    tayyor_text += '✅' + list_tasks[i][d] + '\n\n'
+
         tayyor_text += '------------------\n\n'
     await call.message.answer(tayyor_text)
