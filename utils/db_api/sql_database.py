@@ -1,6 +1,6 @@
 import sqlite3
 
-connect = sqlite3.connect('/home/sharifjon/PycharmProjects/CRM AIOGRAM/crm_database.db')
+connect = sqlite3.connect('C:/Users/Sharifjon/Desktop/CRM-BOT/crm_database.db')
 cursor = connect.cursor()
 
 
@@ -59,3 +59,22 @@ def User_task(user_id):
 
 # cursor.execute("ALTER TABLE tasks_table ADD COLUMN status TEXT DEFAULT 'bajarilmadi'")
 # cursor.execute('SELECT * FROM tasks_table WHERE status=?', ('bajarilmadi',))
+
+
+def sucsess_task(user_id):
+    a = cursor.execute('SELECT * FROM tasks_table WHERE user_id=? and status=?', (user_id,'bajarildi'))
+    task_list = a.fetchall()
+    print(a.fetchall())
+    return task_list
+
+
+def notsucsess_task(user_id):
+    a = cursor.execute('SELECT * FROM tasks_table WHERE user_id=? and status=?', (user_id,'bajarilmadi'))
+    task_list = a.fetchall()
+    print(a.fetchall())
+    return task_list
+
+# cursor.execute('INSERT INTO tasks_table VALUES (?,?,?,?)',('Kitib o`qish 100 bet','5172746353','15-07-2024','bajarildi'))
+# connect.commit()
+# cursor.execute('DELETE FROM tasks_table WHERE user_id=?',('5172746353',))
+# connect.commit()
