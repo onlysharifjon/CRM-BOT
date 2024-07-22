@@ -9,3 +9,7 @@ class All_States(StatesGroup):
     vazifa_yuklash = State()
     vazifa_text = State()
     ochirish = State()
+    filtr_id = State()
+    id_tanlash = State()
+    rating = State()
+    star_result = State()
